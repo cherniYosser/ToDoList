@@ -32,7 +32,7 @@ function Login() {
   }
 
   return (
-    <Card>
+    <Card >
       <Logo />
       <Form>
         <Input
@@ -41,7 +41,7 @@ function Login() {
           onChange={e => {
             setUserName(e.target.value);
           }}
-          placeholder="email"
+          placeholder="Adresse Email"
         />
         <Input
           type="password"
@@ -49,7 +49,7 @@ function Login() {
           onChange={e => {
             setPassword(e.target.value);
           }}
-          placeholder="password"
+          placeholder="Mot de passe"
         />
         <Button onClick={postLogin}>Sign In</Button>
       </Form>

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const Card = styled.div`
+
+margin-top : 100px;
   box-sizing: border-box;
   max-width: 410px;
   margin: 0 auto;

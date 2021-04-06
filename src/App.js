@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import Home from "./pages/Home";
-import Admin from "./pages/Admin";
+import { TasksList } from "./pages/TasksList";
 import { AuthContext } from "./context/Auth";
 import Login from "./pages/Login";
 import Header from "./components/Header"
+import {AddTask} from "./pages/AddTask"
+import {EditTask} from "./pages/EditTask"
 
 function App(props) {
   const [authTokens, setAuthTokens] = useState();
@@ -18,14 +20,17 @@ function App(props) {
   return (
     <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
       <Router>
-        <div>
-          <Header/>
         
+          <Header/>
+        <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
+          <PrivateRoute path="/add" component={AddTask} exact />
+          <PrivateRoute path="/edit/:id" component={EditTask} exact />
           
-          <PrivateRoute path="/admin" component={Admin} />
-        </div>
+          <PrivateRoute path="/admin" component={TasksList} />
+        </Switch>
+          
       </Router>
     </AuthContext.Provider>
   );
