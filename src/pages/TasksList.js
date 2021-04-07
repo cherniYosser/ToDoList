@@ -4,6 +4,26 @@ import { ToDoListContext } from "../context/toDoList";
 import { Link } from "react-router-dom";
 import { Heading } from "../components/Heading";
 
+
+const completed = {
+  backgroundColor: 'green',
+  
+};
+const nonCompleted = {
+  backgroundColor: 'red'
+};
+
+const customDiv = {
+  color: "#FFFFFF",
+  padding: "6px 12px",
+  fontSize: "12px"
+}
+
+const titleText = {
+  fontSize: "20px",
+  fontWeight: "600",
+  marginRight : "10px"
+}
 export const TasksList = () => {
   const { toDoList, setToDoList } = useContext(ToDoListContext);
 
@@ -19,17 +39,21 @@ export const TasksList = () => {
       {toDoList.length > 0 ? (
         <React.Fragment>
           {toDoList.map((task) => (
+            <div class="container mx-auto">
             <div
-              className="flex items-center bg-gray-100 mb-10 shadow"
+              className="flex  items-center bg-gray-100 mb-10 shadow"
               key={task.id}
             >
-              <div className="flex-auto text-left px-4 py-2 m-2">
-                <p className="text-gray-900 leading-none">{task.name}</p>
-                <p className="text-gray-600">{task.description}</p>
+              <div className="flex flex-row text-left px-4 py-2 m-2">
+                <div className="text-gray-900 leading-none" style={titleText}>{task.name} - </div>
+                <div className="text-gray-600"> {task.description}</div>
               </div>
               <div className="flex-auto text-right px-4 py-2 m-2">
+
+              <div style={{...customDiv,...task.status === "Non Completed" ? nonCompleted : completed} } className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold mr-3 py-2 px-4 rounded-full inline-flex items-center">{task.status === "Non Completed" ? "Non Completée" : "Completée"}</div>
+
                 <Link to={`/edit/${task.id}`} title="Edit Task">
-                  <div className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold mr-3 py-2 px-4 rounded-full inline-flex items-center">
+                  <div className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold mr-3 py-2 px-2 rounded-full inline-flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -49,7 +73,7 @@ export const TasksList = () => {
                 </Link>
                 <button
                   onClick={() => removeTask(task.id)}
-                  className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-full inline-flex items-center"
+                  className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-2 rounded-full inline-flex items-center"
                   title="Remove Task"
                 >
                   <svg
@@ -71,6 +95,7 @@ export const TasksList = () => {
                   </svg>
                 </button>
               </div>
+            </div>
             </div>
           ))}
         </React.Fragment>

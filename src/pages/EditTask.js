@@ -12,6 +12,7 @@ export const EditTask = (route) => {
     id: null,
     name: "",
     description: "",
+    status : ""
   });
 
   const currentTaskId = route.match.params.id;
@@ -27,17 +28,21 @@ export const EditTask = (route) => {
     const objIndex = toDoList.findIndex((obj) => obj.id == selectedTask.id);
     toDoList[objIndex].name = selectedTask.name;
     toDoList[objIndex].description = selectedTask.description;
+    toDoList[objIndex].status = selectedTask.status;
     setToDoList(toDoList);
   };
   const onSubmit = (e) => {
     e.preventDefault();
     editTask();
 
-    history.push("/");
+    history.push("/tasks");
   };
 
-  const handleOnChange = (taskKey, newValue) =>
+  const handleOnChange = (taskKey, newValue) => {
     setSelectedTask({ ...selectedTask, [taskKey]: newValue });
+
+
+  }
 
   if (!selectedTask || !selectedTask.id) {
     return <div>Invalid Task ID.</div>;
@@ -52,14 +57,13 @@ export const EditTask = (route) => {
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="name"
             >
-              Name of Task
+              Nom de la tâche
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
               value={selectedTask.name}
               onChange={(e) => handleOnChange("name", e.target.value)}
               type="text"
-              placeholder="Enter name"
             />
           </div>
           <div className="w-full  mb-5">
@@ -67,24 +71,49 @@ export const EditTask = (route) => {
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="description"
             >
-              Description
+              Description de la tâche
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
               value={selectedTask.description}
               onChange={(e) => handleOnChange("description", e.target.value)}
               type="text"
-              placeholder="Enter description"
             />
+          </div>
+
+
+          <div className="w-full  mb-5">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="description"
+            >
+              Status
+            </label>
+
+            <label class="inline-flex items-center">
+            <input type="radio" class="form-radio"  value="Non Completed"
+             checked={selectedTask.status === "Non Completed" ? "Non Completed" : ""}
+              onChange={(e) => handleOnChange("status", e.target.value)}/>
+            <span class="ml-2">Non Completée</span>
+            </label>
+
+            <label class="inline-flex items-center ml-6">
+            <input type="radio" class="form-radio"  value="Completed" checked={selectedTask.status === "Completed" ? "Completed" : ""}
+              onChange={(e) => handleOnChange("status", e.target.value)}/>
+            <span class="ml-2">Completée</span>
+          </label>
+
+           
+           
           </div>
 
           <div className="flex items-center justify-between">
             <button className="block mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline">
-              Edit Task
+              Modifier la tâche
             </button>
           </div>
           <div className="text-center mt-4 text-gray-500">
-            <Link to="/">Cancel</Link>
+            <Link to="/tasks">Retour</Link>
           </div>
         </form>
       </div>

@@ -29,7 +29,7 @@ function App(props) {
             <Route path="/login" component={Login} />
             <PrivateRoute path="/add" component={AddTask} exact />
             <PrivateRoute path="/edit/:id" component={EditTask} exact />
-            <PrivateRoute path="/admin" component={TasksList} />
+            <PrivateRoute path="/tasks" component={TasksList} />
           </Switch>
         </Router>
       </ToDoListContext.Provider>
