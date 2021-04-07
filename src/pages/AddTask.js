@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import { GlobalContext } from '../context/GlobalState';
+import { ToDoListContext } from "../context/toDoList";
 
 export const AddTask = () => {
   let history = useHistory();
 
-  const { addTask, tasks } = useContext(GlobalContext);
+  const { toDoList, setToDoList } = useContext(ToDoListContext);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -14,11 +14,12 @@ export const AddTask = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const newTask = {
-      id: tasks.length + 1,
+      id: toDoList.length + 1,
       name,
       description,
     };
-    addTask(newTask);
+    toDoList.push(newTask);
+    setToDoList(toDoList);
     history.push("/");
   };
 
@@ -56,7 +57,7 @@ export const AddTask = () => {
               placeholder="Enter location"
             />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <button className="mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Add Task
